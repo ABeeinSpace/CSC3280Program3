@@ -2,13 +2,14 @@ import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		int numCommands = in.nextInt();
 		int numCommandsExecuted = 0;
 
 		do {
-			switch (in.next()) {
+			String userInput = in.next();
+			switch (userInput) {
 				case "MocsMath":
 					mocsMath(in);
 					numCommandsExecuted++;
@@ -30,6 +31,7 @@ public class Main {
 	}
 
 	public static void mocsMath(Scanner in) {
+		System.out.println("mocsmaf");
 		int userNum = in.nextInt();
 
         System.out.println(recurringMocsMath(userNum));
@@ -39,7 +41,7 @@ public class Main {
         if (userNum == 0) {
             return 1;
         } else {
-            return recurringMocsMath(userNum - 1) * recurringMocsMath(userNum - 2);
+            return recurringMocsMath(factorial(userNum - 1)) + userNum;
         }
 	}
 
