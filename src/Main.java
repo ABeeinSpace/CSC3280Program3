@@ -27,21 +27,21 @@ public class Main {
 					numCommandsExecuted++;
 					break;
 			}
-		} while (numCommandsExecuted <= numCommands);
+		} while (numCommandsExecuted < numCommands);
 	}
 
 	public static void mocsMath(Scanner in) {
 		System.out.println("mocsmaf");
 		int userNum = in.nextInt();
 
-        System.out.println(recurringMocsMath(userNum));
+        System.out.println(recurringMocsMath(userNum, userNum));
 	}
 
-	public static double recurringMocsMath(int userNum) {
-        if (userNum == 0) {
+	public static double recurringMocsMath(int userNum, int counter) {
+        if (counter == 0) {
             return 1;
         } else {
-            return recurringMocsMath(factorial(userNum - 1)) + userNum;
+            return userNum + recurringMocsMath(factorial(userNum - 1), counter - 1);
         }
 	}
 
