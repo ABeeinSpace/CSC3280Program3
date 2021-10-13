@@ -86,10 +86,56 @@ public class Main {
 	}
 
 	public static void mocsGame(Scanner in) {
+		int startingDollars = in.nextInt();
 
+		boolean isLandoNorrisTheBestInF1 = recursiveMocsGame(startingDollars); // Oops, sorry fingers slipped on the
+		// keyboard on that variable name. Jeez, no idea how I managed that :P
+	}
+
+	public static boolean recursiveMocsGame(int remainingDollars) {
+		if (remainingDollars == 42) {
+			return true; // return true (which will result in an output of "solvable") because we've just made bank!
+		} else if (remainingDollars < 42) {
+			return false; // Return false here because we've gone under 42 dollars, which means the player's lost the
+			// game.
+		}
+
+		if (remainingDollars % 3 == 0 || remainingDollars % 4 == 0) {
+			int firstMultiple = remainingDollars % 10;
+			int secondMultiple = remainingDollars % 10;
+			int dollarsGivenBack = firstMultiple * secondMultiple;
+
+			return recursiveMocsGame(remainingDollars - dollarsGivenBack);
+		} if (remainingDollars % 5 == 0) {
+			return recursiveMocsGame(remainingDollars - 42); // In this case, we give back 42 dollars because our
+			// dollar amount was divisible by 5.
+		} else if (remainingDollars % 2 == 0) {
+			return recursiveMocsGame(remainingDollars / 2);
+		}
+		return recursiveMocsGame(remainingDollars);
 	}
 
 	public static void mocsHop(Scanner in) {
+		int initPosition = in.nextInt();
+		int size = in.nextInt();
+		int[] gameBoard = new int[size];
 
+		for (int i = 0; i < size; i++) {
+			gameBoard[i] = in.nextInt();
+		}
+
+		boolean result = recursiveMocsHop(gameBoard, initPosition);
+
+		System.out.println(result);
+	}
+
+	public static boolean recursiveMocsHop(int[] squares, int myIndex) {
+		if (squares.length > squares[myIndex] || squares[myIndex] < 0 ) {
+			return false;
+		} else if (squares[myIndex] == 0) {
+			return true;
+		} else {
+			return (recursiveMocsHop(squares, myIndex + squares[myIndex]) || recursiveMocsHop(squares, myIndex - squares[myIndex]));
+		}
 	}
 }
