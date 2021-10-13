@@ -31,17 +31,17 @@ public class Main {
 	}
 
 	public static void mocsMath(Scanner in) {
-		System.out.println("mocsmaf");
 		int userNum = in.nextInt();
 
-        System.out.println(recurringMocsMath(userNum, userNum));
+        System.out.println(recurringMocsMath(userNum));
 	}
 
-	public static double recurringMocsMath(int userNum, int counter) {
-        if (counter == 0) {
+	public static int recurringMocsMath(int userNum) {
+        if (userNum == 0) {
             return 1;
         } else {
-            return userNum + recurringMocsMath(factorial(userNum - 1), counter - 1);
+			int factorial = factorial(userNum);
+            return factorial + recurringMocsMath(userNum - 1);
         }
 	}
 
@@ -54,7 +54,35 @@ public class Main {
 	}
 
 	public static void mocsShape(Scanner in) {
+		int lowerBound = in.nextInt();
+		int upperBound = in.nextInt();
 
+		mocsShapeForward(lowerBound, upperBound);
+		mocsShapeBackward(lowerBound, upperBound);
+	}
+
+	private static void mocsShapeForward(int lowerBound, int upperBound) {
+		if (lowerBound > upperBound) {
+			return;
+		}
+
+		for (int i = 1; i <= lowerBound; i++) {
+			System.out.print("* ");
+		}
+		System.out.println();
+		mocsShapeForward(lowerBound + 1, upperBound);
+	}
+
+	private static void mocsShapeBackward(int lowerBound, int upperBound) {
+		if (upperBound < lowerBound) {
+			return;
+		}
+
+		for (int i = upperBound; i >= 1; i--) {
+			System.out.print("* ");
+		}
+		System.out.println();
+		mocsShapeBackward(lowerBound, upperBound - 1);
 	}
 
 	public static void mocsGame(Scanner in) {
