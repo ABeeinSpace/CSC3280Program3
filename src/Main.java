@@ -15,7 +15,9 @@ public class Main {
 					numCommandsExecuted++;
 					break;
 				case "MocsShape":
+					System.out.println("MocsShape:");
 					mocsShape(in);
+					System.out.println();
 					numCommandsExecuted++;
 					break;
 				case "MocsGame":
@@ -33,19 +35,19 @@ public class Main {
 	public static void mocsMath(Scanner in) {
 		int userNum = in.nextInt();
 
-        System.out.println(recurringMocsMath(userNum));
+		System.out.printf("MocsMath:  %d\n\n", recurringMocsMath(userNum));
 	}
 
-	public static int recurringMocsMath(int userNum) {
-        if (userNum == 0) {
-            return 1;
-        } else {
-			int factorial = factorial(userNum);
-            return factorial + recurringMocsMath(userNum - 1);
-        }
+	public static long recurringMocsMath(int userNum) {
+		if (userNum == 0) {
+			return 1;
+		} else {
+			long factorial = factorial(userNum);
+			return factorial + recurringMocsMath(userNum - 1);
+		}
 	}
 
-	public static int factorial(int userNum) {
+	public static long factorial(long userNum) {
 		if (userNum == 0) {
 			return 1;
 		} else {
@@ -90,29 +92,29 @@ public class Main {
 
 		boolean isLandoNorrisTheBestInF1 = recursiveMocsGame(startingDollars); // Oops, sorry fingers slipped on the
 		// keyboard on that variable name. Jeez, no idea how I managed that :P
+
+		System.out.println(isLandoNorrisTheBestInF1);
 	}
 
 	public static boolean recursiveMocsGame(int remainingDollars) {
-		if (remainingDollars == 42) {
-			return true; // return true (which will result in an output of "solvable") because we've just made bank!
-		} else if (remainingDollars < 42) {
+		if (remainingDollars < 42) {
 			return false; // Return false here because we've gone under 42 dollars, which means the player's lost the
 			// game.
+		} if (remainingDollars == 42) {
+			return true; // return true (which will result in an output of "solvable") because we've just made bank!
 		}
-
-		if (remainingDollars % 3 == 0 || remainingDollars % 4 == 0) {
+		if (remainingDollars % 5 == 0 && recursiveMocsGame(remainingDollars - 42)) {
+			return true;
+		} if (remainingDollars % 2 == 0 && recursiveMocsGame(remainingDollars / 2)) {
+			return true;
+		} if (remainingDollars % 4 == 0 || remainingDollars % 3 == 0) {
 			int firstMultiple = remainingDollars % 10;
-			int secondMultiple = remainingDollars % 10;
+			int secondMultiple = (remainingDollars % 100) / 10;
 			int dollarsGivenBack = firstMultiple * secondMultiple;
 
 			return recursiveMocsGame(remainingDollars - dollarsGivenBack);
-		} if (remainingDollars % 5 == 0) {
-			return recursiveMocsGame(remainingDollars - 42); // In this case, we give back 42 dollars because our
-			// dollar amount was divisible by 5.
-		} else if (remainingDollars % 2 == 0) {
-			return recursiveMocsGame(remainingDollars / 2);
 		}
-		return recursiveMocsGame(remainingDollars);
+		return false; // fuck you java. Piece of shit.
 	}
 
 	public static void mocsHop(Scanner in) {
@@ -124,18 +126,19 @@ public class Main {
 			gameBoard[i] = in.nextInt();
 		}
 
-		boolean result = recursiveMocsHop(gameBoard, initPosition);
+		boolean result = recursiveMocsHop(gameBoard, initPosition, 0);
 
 		System.out.println(result);
 	}
 
-	public static boolean recursiveMocsHop(int[] squares, int myIndex) {
-		if (squares.length > squares[myIndex] || squares[myIndex] < 0 ) {
+	public static boolean recursiveMocsHop(int[] squares, int myIndex, int moveCounter) {
+		if ( moveCounter > squares.length || myIndex < 0 || myIndex >= squares.length) {
 			return false;
-		} else if (squares[myIndex] == 0) {
+		} if (squares[myIndex] == 0) {
 			return true;
 		} else {
-			return (recursiveMocsHop(squares, myIndex + squares[myIndex]) || recursiveMocsHop(squares, myIndex - squares[myIndex]));
+			return (recursiveMocsHop(squares, myIndex - squares[myIndex], moveCounter + 1) || recursiveMocsHop(squares,
+					myIndex + squares[myIndex], moveCounter + 1));
 		}
 	}
 }
