@@ -1,7 +1,20 @@
+/*
+ Aidan Border
+ 10/14/2021
+ CSC 3280
+ Honor Code: I will practice academic and personal integrity and excellence of character and expect the same from
+ others
+ https://www.youtube.com/watch?v=dQw4w9WgXcQ
+*/
+
 import java.util.Scanner;
 
 public class Main {
 
+	/*  main()
+	 *  Parameters: String[] args
+	 *  Returns: Void
+	 *  Description: Method invoked by the Java runtime when we run the project or run Main.java directly. */
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		int numCommands = in.nextInt();
@@ -32,12 +45,22 @@ public class Main {
 		} while (numCommandsExecuted < numCommands);
 	}
 
+	/*  mocsMath()
+	 *  Parameters: Scanner in
+	 *  Returns: Void
+	 *  Description: Wrapper method for recurringMocsMath. This method's job is to start the recursion going and to
+	 * print the result.*/
 	public static void mocsMath(Scanner in) {
 		int userNum = in.nextInt();
 
 		System.out.printf("MocsMath:  %d\n\n", recurringMocsMath(userNum));
 	}
 
+	/*  recurringMocsMath()
+	 *  Parameters: int userNum
+	 *  Returns: long
+	 *  Description: Method to compute the sums of the factorial of a given number.
+	 * Special: Method utilizes recursion.*/
 	public static long recurringMocsMath(int userNum) {
 		if (userNum == 0) {
 			return 1;
@@ -47,6 +70,11 @@ public class Main {
 		}
 	}
 
+	/*  factorial()
+	 *  Parameters: long userNum
+	 *  Returns: long
+	 *  Description: Supporting method for recurringMocsMath.
+	 * Special: Method utilizes recursion.*/
 	public static long factorial(long userNum) {
 		if (userNum == 0) {
 			return 1;
@@ -55,6 +83,10 @@ public class Main {
 		}
 	}
 
+	/*  mocsShape()
+	 *  Parameters: Scanner in
+	 *  Returns: void
+	 *  Description: Wrapper method for mocsShapeForward and mocsShapeBackward. */
 	public static void mocsShape(Scanner in) {
 		int lowerBound = in.nextInt();
 		int upperBound = in.nextInt();
@@ -93,7 +125,11 @@ public class Main {
 		boolean isLandoNorrisTheBestInF1 = recursiveMocsGame(startingDollars); // Oops, sorry fingers slipped on the
 		// keyboard on that variable name. Jeez, no idea how I managed that :P
 
-		System.out.println(isLandoNorrisTheBestInF1);
+		if (isLandoNorrisTheBestInF1) {
+			System.out.println("MocsGame:  Solvable\n");
+		} else {
+			System.out.println("MocsGame:  Not Solvable\n");
+		}
 	}
 
 	public static boolean recursiveMocsGame(int remainingDollars) {
@@ -111,8 +147,10 @@ public class Main {
 			int firstMultiple = remainingDollars % 10;
 			int secondMultiple = (remainingDollars % 100) / 10;
 			int dollarsGivenBack = firstMultiple * secondMultiple;
-
-			return recursiveMocsGame(remainingDollars - dollarsGivenBack);
+			if (dollarsGivenBack != 0) { // Mitigation to prevent going into an unexpected state when the product is
+				// 0 where we give no dollars back and get stuck in an infinite loop until the stack overflows.
+				return recursiveMocsGame(remainingDollars - dollarsGivenBack);
+			}
 		}
 		return false; // fuck you java. Piece of shit.
 	}
@@ -128,7 +166,12 @@ public class Main {
 
 		boolean result = recursiveMocsHop(gameBoard, initPosition, 0);
 
-		System.out.println(result);
+		if (result) {
+			System.out.println("MocsHop:  Solvable");
+		} else {
+			System.out.println("MocsHop:  Not Solvable");
+		}
+		System.out.println();
 	}
 
 	public static boolean recursiveMocsHop(int[] squares, int myIndex, int moveCounter) {
